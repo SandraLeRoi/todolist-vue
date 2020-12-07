@@ -5,15 +5,18 @@
     <input type="text" v-model="currentTask" @keypress.enter="addTask">
     <button @click="addTask">Ajouter une tache</button>
 
-    <div :key="index" class="task" v-for="(task, index) in tasks">
-      <li>{{ task }}</li>
-    </div>
+    <ul>
+      <Task :key=i v-for="(task, i) in tasks" :taskToDisplay="task" @remove="removeTask(i)"/>
+    </ul>
   </div>
 </template>
 
 <script>
+import Task from "@/components/Task";
+
 export default {
   name: "TodolistComponent",
+  components: {Task},
   data() {
     return {
       currentTask: "",
@@ -30,6 +33,9 @@ export default {
     addTask() {
       this.tasks.push(this.currentTask),
       this.currentTask = ""
+    },
+    removeTask(index){
+      this.tasks.splice(index,1)
     }
   },
 }
