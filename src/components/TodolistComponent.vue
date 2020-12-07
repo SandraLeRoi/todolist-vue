@@ -2,7 +2,7 @@
   <div>
     <h1>{{ message }}</h1>
 
-    <input type="text" v-model="currentTask" @keypress.enter="addTask">
+    <input ref="myInput" type="text" v-model="currentTask" @keypress.enter="addTask">
     <button @click="addTask">Ajouter une tache</button>
 
     <ul>
@@ -31,8 +31,9 @@ export default {
   },
   methods: {
     addTask() {
-      this.tasks.push(this.currentTask),
+      this.tasks.push(this.currentTask)
       this.currentTask = ""
+      this.$refs.myInput.focus()
     },
     removeTask(index){
       this.tasks.splice(index,1)
