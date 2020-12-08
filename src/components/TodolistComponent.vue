@@ -10,8 +10,8 @@
           :key=i
           v-for="(task, i) in tasks"
           :taskToDisplay="task"
-          @remove="removeTask(i)"
-          @end-task="task.isDone = true"
+          @remove="removeTask(i, task.id)"
+          @done="taskDone(task)"
       />
     </ul>
   </div>
@@ -19,6 +19,7 @@
 
 <script>
 import Task from "@/components/Task";
+import Axios from "axios";
 
 export default {
   name: "TodolistComponent",
@@ -36,18 +37,35 @@ export default {
     },
   },
   methods: {
-    addTask() {
-      this.tasks.push({
-        message: this.currentTask,
-        isDone: false
-      })
+    async addTask() {
+      Axios.post("https://todo-hoc.dunarr.com/tasks/5fcf7991ae75c", ({
+        name: this.currentTask,
+        isDone:false
+      }))
+      this.tasks.push(response.data)
       this.currentTask = ""
       this.$refs.myInput.focus()
     },
-    removeTask(index){
+    removeTask(index, id){
+      Axios.delete("https://todo-hoc.dunarr.com/tasks/5fcf7991ae75c/" + id)
       this.tasks.splice(index,1)
+
+    },
+    async fetchTasks() {
+      const response = await Axios.get("https://todo-hoc.dunarr.com/tasks/5fcf7991ae75c")
+      this.tasks = response.data.tasks
+    },
+    taskDone(task){
+      const done = !task.isDone
+      Axios.put("https://todo-hoc.dunarr.com/tasks/5fcf7991ae75c/" + task.id,{
+        isDone: done
+      } )
+      task.isDone = done
     }
   },
+  mounted() {
+    this.fetchTasks()
+  }
 }
 </script>
 
