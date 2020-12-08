@@ -1,17 +1,19 @@
 <template>
   <div id="app">
-    <TodolistComponent/>
+    <Banner><b>Message du jour: </b>Salut à tous</Banner>
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
 import TodolistComponent from "@/components/TodolistComponent";
+import TestComponent from "@/components/TestComponent";
+import Banner from "@/components/Banner";
 
 export default {
   name: 'App',
   components: {
-    TodolistComponent
+    Banner,
   }
 }
 </script>
