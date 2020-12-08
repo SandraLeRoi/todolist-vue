@@ -6,7 +6,13 @@
     <button @click="addTask">Ajouter une tache</button>
 
     <ul>
-      <Task :key=i v-for="(task, i) in tasks" :taskToDisplay="task" @remove="removeTask(i)"/>
+      <Task
+          :key=i
+          v-for="(task, i) in tasks"
+          :taskToDisplay="task"
+          @remove="removeTask(i)"
+          @end-task="task.isDone = true"
+      />
     </ul>
   </div>
 </template>
@@ -31,7 +37,10 @@ export default {
   },
   methods: {
     addTask() {
-      this.tasks.push(this.currentTask)
+      this.tasks.push({
+        message: this.currentTask,
+        isDone: false
+      })
       this.currentTask = ""
       this.$refs.myInput.focus()
     },

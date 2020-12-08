@@ -1,6 +1,11 @@
 <template>
   <li>
-    {{taskToDisplay}}
+    <span
+        :class="{taskDone:taskToDisplay.isDone}"
+        @click="$emit('end-task')">
+      {{taskToDisplay.message}}
+    </span>
+
     <button @click="deleteTask">Supprimer</button>
   </li>
 </template>
@@ -10,8 +15,11 @@ export default {
 name: "Task",
   props: {
     taskToDisplay: {
-      type: String,
-      default: ""
+      type: Object,
+      default: {
+        message: "",
+        isDone: false
+      }
     },
   },
   methods: {
@@ -23,5 +31,13 @@ name: "Task",
 </script>
 
 <style scoped>
+span{
+  width: 50%;
+  display: inline-block;
+}
+.taskDone {
+  text-decoration: line-through;
+  color: darkgrey;
+}
 
 </style>

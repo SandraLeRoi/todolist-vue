@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Banner><b>Message du jour: </b>Salut à tous</Banner>
+    <TodolistComponent/>
   </div>
 </template>
 
@@ -14,6 +14,9 @@ export default {
   name: 'App',
   components: {
     Banner,
+    TodolistComponent,
+    TestComponent,
+    HelloWorld
   }
 }
 </script>
